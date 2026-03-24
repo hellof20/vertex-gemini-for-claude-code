@@ -1,0 +1,18 @@
+# Google Cloud Vertex AI 配置
+vertex_project_id: your-project-id
+vertex_region: global
+# 可选: 使用 API Key 进行认证
+vertex_api_key: ""
+
+# 代理服务器配置
+server_port: 8765
+
+# 模型映射配置: Anthropic 模型 -> Gemini 模型
+model_map:
+  claude-haiku-4-5: gemini-3-flash-preview
+  claude-sonnet-4-5: gemini-3-flash-preview
+  claude-sonnet-4-6: gemini-3-flash-preview
+  claude-opus-4-6: gemini-3.1-pro-preview
+
+# 默认使用的 Gemini 模型
+default_gemini_model: gemini-3-flash-preview
