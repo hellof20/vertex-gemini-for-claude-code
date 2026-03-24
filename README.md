@@ -4,11 +4,11 @@
 
 ## 功能特性
 
-- **协议转换**：完美支持 Anthropic 消息格式到 Gemini 内容格式的转换。
+- **协议转换**：支持 Anthropic 消息格式到 Gemini 内容格式的转换。
 - **流式输出**：支持 Server-Sent Events (SSE) 流式响应。
 - **工具调用**：支持 Anthropic 格式的工具定义和调用转换。
 - **模型映射**：可以通过 `config.yaml` 自定义 Anthropic 模型到 Gemini 模型的映射。
-- **完善的日志统计**：自动记录 Token 消耗（支持 Cache 和 Thinking Tokens），并对 API 错误信息进行了易读性优化。
+- **日志统计**：自动记录 Token 消耗（支持 Cache 和 Thinking Tokens），并对 API 错误信息进行了易读性优化。
 
 ## 快速开始
 
@@ -17,16 +17,33 @@
 确保您已安装 Python 3.9+，然后安装所需依赖：
 
 ```bash
-pip install fastapi uvicorn google-genai pyyaml
+pip install -r requirements.txt
 ```
 
 ### 2. 配置说明
 
-项目支持通过 `config.yaml` 或环境变量进行配置：
+项目支持通过 `config.yaml` 或环境变量进行配置。环境变量的优先级高于配置文件。
 
-- `VERTEX_PROJECT_ID`: 您的 Google Cloud 项目 ID。
-- `VERTEX_REGION`: Vertex AI 区域（默认为 `global`）。
-- `SERVER_PORT`: 代理服务器运行端口（默认为 `8765`）。
+你可以复制示例配置文件并进行修改：
+
+```bash
+cp config.yaml.example config.yaml
+```
+
+**配置项说明：**
+
+- `vertex_project_id`: 您的 Google Cloud 项目 ID。
+- `vertex_region`: Vertex AI 区域（默认为 `global`）。
+- `vertex_api_key`: (可选) Google Cloud API Key。
+- `server_port`: 代理服务器运行端口（默认为 `8765`）。
+- `model_map`: Anthropic 模型到 Gemini 模型的映射关系。
+- `default_gemini_model`: 找不到映射时使用的默认模型。
+
+你也可以使用环境变量来覆盖部分配置：
+
+- `VERTEX_PROJECT_ID`
+- `VERTEX_REGION`
+- `SERVER_PORT`
 
 ### 3. 认证配置 (Authentication)
 
@@ -85,5 +102,4 @@ export ANTHROPIC_BASE_URL=http://localhost:8765
 
 ## 注意事项
 
-- 运行前请确保已配置好 Google Cloud 认证环境（如 `gcloud auth application-default login`）。
-- 本项目暂不保证所有 Anthropic 特性的 100% 兼容，仅涵盖核心对话功能。
+- 本项目暂不保证所有 Anthropic 特性的 100% 兼容，仅涵盖核心对话功能，欢迎PR。
